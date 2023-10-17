@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-const crypto = require("crypto");
+const { nanoid } = require("nanoid");
 
 const contactsPath = path.join(__dirname, "contacts.json");
 
@@ -10,9 +10,7 @@ const listContacts = async () => {
   return JSON.parse(contactsBuffer) || [];
 };
 
-const generateUniqueId = () => {
-  return crypto.randomBytes(8).toString("hex");
-};
+
 
 const getContactById = async (contactId) => {
   const contacts = await listContacts();
@@ -22,7 +20,7 @@ const getContactById = async (contactId) => {
 
 const addContact = async (name, email, phone) => {
   const contacts = await listContacts();
-  const newContact = { id: generateUniqueId(), name, email, phone };
+  const newContact = { id: nanoid(), name, email, phone };
 
   contacts.push(newContact);
 
